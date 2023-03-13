@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Wrapper from "../Helpers/Wrapper";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import ErrorModal from "../UI/ErrorModal";
@@ -9,7 +10,7 @@ const AddUser = (props) => {
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
   const [error, setError] = useState("");
-  const [isError, setIsError] = useState(false)
+  const [isError, setIsError] = useState(false);
 
   const changeUsername = (event) => {
     setUsername(event.target.value);
@@ -23,18 +24,18 @@ const AddUser = (props) => {
     e.preventDefault();
 
     if (username.trim().length === 0 || age.trim().length === 0) {
-        setError({
-            title: "Invalid input",
-            message: "Please enter a valid name and age (non-empty values)."
-        })
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid name and age (non-empty values).",
+      });
       return;
     }
 
     if (+age < 1) {
-        setError({
-            title: "Invalid age",
-            message: "Please enter a valid  age (> 0)."
-        })
+      setError({
+        title: "Invalid age",
+        message: "Please enter a valid  age (> 0).",
+      });
       return;
     }
     props.updateUserList({ name: username, age: age });
@@ -43,12 +44,18 @@ const AddUser = (props) => {
   };
 
   const cancelModal = () => {
-    setError(null)
-  }
+    setError(null);
+  };
 
   return (
-    <>
-    {error && <ErrorModal title={error.title} message={error.message} cancelErrorModal={cancelModal}/>}
+    <Wrapper>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          cancelErrorModal={cancelModal}
+        />
+      )}
       <Card className={styles.input}>
         <form onSubmit={addUser}>
           <label htmlFor="username">Username</label>
@@ -63,7 +70,7 @@ const AddUser = (props) => {
           <Button type="submit">Add user</Button>
         </form>
       </Card>
-    </>
+    </Wrapper>
   );
 };
 
